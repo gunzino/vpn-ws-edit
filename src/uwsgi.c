@@ -112,9 +112,9 @@ int64_t vpn_ws_handshake(int queue, vpn_ws_peer *peer) {
 	if (!ws_key) return -1;
 
 
-	// check if the X-vpn-ws-MAC header is available
+	// check if the X-vpn-ws-MAC header is available - now ETAG
 	uint16_t ws_mac_len = 0;
-	char *ws_mac = vpn_ws_peer_get_var(peer, "HTTP_X_VPN_WS_MAC", 17, &ws_mac_len);
+	char *ws_mac = vpn_ws_peer_get_var(peer, "HTTP_X_INFO_ONE", 17, &ws_mac_len);
 	if (ws_mac) {
 		if (ws_mac_len != 17) return -1;
 		uint8_t i;
@@ -128,7 +128,7 @@ int64_t vpn_ws_handshake(int queue, vpn_ws_peer *peer) {
 	}
 
 	uint16_t ws_bridge_len = 0;
-	char *ws_bridge = vpn_ws_peer_get_var(peer, "HTTP_X_VPN_WS_BRIDGE", 20, &ws_bridge_len);
+	char *ws_bridge = vpn_ws_peer_get_var(peer, "HTTP_X_INFO_TWO", 20, &ws_bridge_len);
 	if (ws_bridge) {
 		if (ws_bridge_len == 2 && ws_bridge[0] == 'o' && ws_bridge[1] == 'n') {
 			peer->bridge = 1;
